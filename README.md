@@ -17,7 +17,7 @@ docker run --network plaintext_default -p 8080:8080 --name sr_plugins -d sr_plug
 
 Open browser and start using the REST API:
 
-[http://localhost:8080](http://localhost:8080)
+[http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
 
 ### Available APIs
 ![APIs](images/api.png)
