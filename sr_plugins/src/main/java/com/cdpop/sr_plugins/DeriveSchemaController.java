@@ -2,16 +2,19 @@ package com.cdpop.sr_plugins;
 
 import com.cdpop.sr_plugins.constant.AnnotationConstants;
 import com.cdpop.sr_plugins.processor.StartProcessHelper;
-import io.micrometer.core.instrument.util.StringEscapeUtils;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
 
+
 @RestController
 @Tag(name="Derive Schema APIs")
+
 public class DeriveSchemaController {
 
     static final Logger LOGGER = Logger.getLogger(DeriveSchemaController.class.getName());
@@ -20,11 +23,12 @@ public class DeriveSchemaController {
     @PostMapping(value = {"/derive-schema/{data_type}"})
     public String callDeriveSchema_data_type(
             @Parameter(description = AnnotationConstants.dataTypeDescription) @PathVariable(required = false) String data_type,
-            @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody String payload
+            @Schema(description = "Json with single quotes schema", defaultValue = "{\"name\":\"value3\"}") @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody JsonNode jsonPayload
     ){
         StartProcessHelper startProcessHelper = new StartProcessHelper();
         data_type = startProcessHelper.pathVariableFormatter(data_type,"avro");
-        String payloadResult = startProcessHelper.isPayLoadGood(payload);
+        String payload = "'" + jsonPayload.toString() + "'";
+        String payloadResult = startProcessHelper.isPayLoadGood("'"+payload.toString() + "'");
 
         if (!payloadResult.equals("continue")){
             // Payload was not provided sending response back
@@ -42,10 +46,11 @@ public class DeriveSchemaController {
     public String callDeriveSchema_data_type_interval(
             @Parameter(description = AnnotationConstants.intervalDescription) @PathVariable(required = false) String interval,
             @Parameter(description = AnnotationConstants.dataTypeDescription) @PathVariable(required = false) String data_type,
-            @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody String payload
+            @Schema(description = "Json with single quotes schema", defaultValue = "{\"name\":\"value3\"}") @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody JsonNode jsonPayload
     ){
         StartProcessHelper startProcessHelper = new StartProcessHelper();
         data_type = startProcessHelper.pathVariableFormatter(data_type,"avro");
+        String payload = "'" + jsonPayload.toString() + "'";
         String payloadResult = startProcessHelper.isPayLoadGood(payload);
         if (!payloadResult.equals("continue")){
             // Payload was not provided sending response back
@@ -71,11 +76,12 @@ public class DeriveSchemaController {
     public String callDeriveSchemaTopic(
             @Parameter(description = AnnotationConstants.dataTypeDescription) @PathVariable(required = false) String data_type,
             @Parameter(description = AnnotationConstants.topicDescription) @PathVariable(required = false) String topic,
-            @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody String payload
+            @Schema(description = "Json with single quotes schema", defaultValue = "{\"name\":\"value3\"}") @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody JsonNode jsonPayload
     ){
         StartProcessHelper startProcessHelper = new StartProcessHelper();
         data_type = startProcessHelper.pathVariableFormatter(data_type,"avro");
         topic = startProcessHelper.pathVariableFormatter(topic,"sample_data");
+        String payload = "'" + jsonPayload.toString() + "'";
         String payloadResult = startProcessHelper.isPayLoadGood(payload);
         if (!payloadResult.equals("continue")){
             // Payload was not provided sending response back
@@ -96,11 +102,12 @@ public class DeriveSchemaController {
             @Parameter(description = AnnotationConstants.intervalDescription) @PathVariable(required = false) String interval,
             @Parameter(description = AnnotationConstants.dataTypeDescription) @PathVariable(required = false) String data_type,
             @Parameter(description = AnnotationConstants.topicDescription) @PathVariable(required = false) String topic,
-            @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody String payload
+            @Schema(description = "Json with single quotes schema", defaultValue = "{\"name\":\"value3\"}") @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody JsonNode jsonPayload
     ){
         StartProcessHelper startProcessHelper = new StartProcessHelper();
         data_type = startProcessHelper.pathVariableFormatter(data_type,"avro");
         topic = startProcessHelper.pathVariableFormatter(topic,"sample_data");
+        String payload = "'" + jsonPayload.toString() + "'";
         String payloadResult = startProcessHelper.isPayLoadGood(payload);
         if (!payloadResult.equals("continue")){
             // Payload was not provided sending response back
@@ -127,12 +134,13 @@ public class DeriveSchemaController {
             @Parameter(description = AnnotationConstants.brokerDescription) @PathVariable(required = false) String broker,
             @Parameter(description = AnnotationConstants.topicDescription) @PathVariable(required = false) String topic,
             @Parameter(description = AnnotationConstants.dataTypeDescription) @PathVariable(required = false) String data_type,
-            @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody String payload
+            @Schema(description = "Json with single quotes schema", defaultValue = "{\"name\":\"value3\"}") @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody JsonNode jsonPayload
     ){
         StartProcessHelper startProcessHelper = new StartProcessHelper();
         broker = startProcessHelper.pathVariableFormatter(broker,"broker:9092");
         data_type = startProcessHelper.pathVariableFormatter(data_type,"avro");
         topic = startProcessHelper.pathVariableFormatter(topic,"sample_data");
+        String payload = "'" + jsonPayload.toString() + "'";
         String payloadResult = startProcessHelper.isPayLoadGood(payload);
         if (!payloadResult.equals("continue")){
             // Payload was not provided sending response back
@@ -158,12 +166,13 @@ public class DeriveSchemaController {
             @Parameter(description = AnnotationConstants.topicDescription) @PathVariable(required = false) String topic,
             @Parameter(description = AnnotationConstants.dataTypeDescription) @PathVariable(required = false) String data_type,
             @Parameter(description = AnnotationConstants.intervalDescription) @PathVariable(required = false) String interval,
-            @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody String payload
+            @Schema(description = "Json with single quotes schema", defaultValue = "{\"name\":\"value3\"}") @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody JsonNode jsonPayload
     ){
         StartProcessHelper startProcessHelper = new StartProcessHelper();
         broker = startProcessHelper.pathVariableFormatter(broker,"broker:9092");
         data_type = startProcessHelper.pathVariableFormatter(data_type,"avro");
         topic = startProcessHelper.pathVariableFormatter(topic,"sample_data");
+        String payload = "'" + jsonPayload.toString() + "'";
         String payloadResult = startProcessHelper.isPayLoadGood(payload);
         if (!payloadResult.equals("continue")){
             // Payload was not provided sending response back
@@ -194,7 +203,7 @@ public class DeriveSchemaController {
             @Parameter(description = AnnotationConstants.dataTypeDescription) @PathVariable(required = false) String data_type,
             @Parameter(description = AnnotationConstants.intervalDescription) @PathVariable(required = false) String interval,
             @Parameter(description = AnnotationConstants.extraPropertiesDescription) @PathVariable(required = false) String extra_props,
-            @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody String payload
+            @Schema(description = "Json with single quotes schema", defaultValue = "{\"name\":\"value3\"}") @Parameter(description = AnnotationConstants.payLoadDescription) @RequestBody JsonNode jsonPayload
     ){
         StartProcessHelper startProcessHelper = new StartProcessHelper();
         broker = startProcessHelper.pathVariableFormatter(broker,"broker:9092");
@@ -202,6 +211,7 @@ public class DeriveSchemaController {
         topic = startProcessHelper.pathVariableFormatter(topic,"sample_data");
         sr_url = startProcessHelper.pathVariableFormatter(sr_url,"http://schema-registry:8081");
         extra_props = startProcessHelper.pathVariableFormatter(extra_props,"");
+        String payload = "'" + jsonPayload.toString() + "'";
         String payloadResult = startProcessHelper.isPayLoadGood(payload);
         if (!payloadResult.equals("continue")){
             // Payload was not provided sending response back

@@ -18,6 +18,7 @@ public class StartProcessHelper {
     public int processStart(String command) {
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.command("bash", "-c", command);
+        System.out.println("Attempting to run command -> " + command);
         StringBuilder output = new StringBuilder();
         int exitVal = -1;
         try {

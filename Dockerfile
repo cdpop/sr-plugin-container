@@ -53,6 +53,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd\">  \n\
  \n\
  " > $PATHS/pom.xml
 
+# Running mvn here so we can ensure REST API can easily compile and run. This way we have all the maven dependencies downloaded when spring boot app starts
 RUN  mvn io.confluent:kafka-schema-registry-maven-plugin:derive-schema
 COPY $SHELL_FILE .
 COPY sr_plugins/target/sr_plugins-1.0.0-SNAPSHOT.jar app.jar
