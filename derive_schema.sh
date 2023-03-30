@@ -1,48 +1,64 @@
-#! /bin/bash
+#!/bin/bash
 set -e 
 
-
-# data_type has to be lowercase
+DATA_TYPE="${1:-avro}"
 DATA_TYPE=$(echo "$DATA_TYPE" | tr '[:upper:]' '[:lower:]')
+
+MESSAGE="${2:-{\"me\":\"Foo\", \"Age\": 14}}"
+# needed to export to fix escape issues
+export MESSAGE="$MESSAGE"
 
 echo $MESSAGE > $PATHS/file.txt
 
+BROKER="${3:-broker:9092}"
+TOPIC="${4:-sample_data}"
+SCHEMA_URL="${5:-http://schema-registry:8081}"
+ADDITIONAL_PROPERTIES="${6:-}"
+# data_type has to be lowercase
+DATA_TYPE=$(echo "$DATA_TYPE" | tr '[:upper:]' '[:lower:]')
+
+SR_MAVEN_PLUGIN_VERSION="${7:-7.3.1}"
+PATHS="${8:-/home/appuser}"
+SHELL_FILE="${9:-derive_schema.sh}"
+OUTPUT_FILE="${10:-schema.json}"
+
+echo $MESSAGE > $PATHS/file.txt
 
 echo -e " \n
-<project xmlns=\"http://maven.apache.org/POM/4.0.0\" \n
-xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"  \n
-  xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0   \n
-http://maven.apache.org/xsd/maven-4.0.0.xsd\">  \n
-  <modelVersion>4.0.0</modelVersion>  \n
-  <groupId>io.confluent.app1</groupId>  \n
-  <artifactId>my-app</artifactId>  \n
-  <version>1</version>  \n
-    <pluginRepositories> \n
-        <pluginRepository> \n
-            <id>confluent</id> \n
-            <url>https://packages.confluent.io/maven/</url> \n
-        </pluginRepository> \n
-    </pluginRepositories> \n
-  <build> \n
-	<plugins> \n
-		<plugin> \n
-			<groupId>io.confluent</groupId> \n
-			<artifactId>kafka-schema-registry-maven-plugin</artifactId> \n
-			<version>$SR_MAVEN_PLUGIN_VERSION</version> \n
-			<configuration> \n
-				<messagePath>$PATHS/file.txt</messagePath> \n
-				<schemaType>$DATA_TYPE</schemaType> \n
-				<outputPath>$PATHS/$OUTPUT_FILE</outputPath> \n
-			</configuration> \n
-		</plugin> \n
-	</plugins> \n
-  </build> \n
-</project>  \n
+<project xmlns=\"http://maven.apache.org/POM/4.0.0\" 
+xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"  
+  xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0   
+http://maven.apache.org/xsd/maven-4.0.0.xsd\">  
+  <modelVersion>4.0.0</modelVersion>  
+  <groupId>io.confluent.app1</groupId>  
+  <artifactId>my-app</artifactId>  
+  <version>1</version>  
+    <pluginRepositories> 
+        <pluginRepository> 
+            <id>confluent</id> 
+            <url>https://packages.confluent.io/maven/</url> 
+        </pluginRepository> 
+    </pluginRepositories> 
+  <build> 
+	<plugins> 
+		<plugin> 
+			<groupId>io.confluent</groupId> 
+			<artifactId>kafka-schema-registry-maven-plugin</artifactId> 
+			<version>$SR_MAVEN_PLUGIN_VERSION</version> 
+			<configuration> 
+				<messagePath>$PATHS/file.txt</messagePath> 
+				<schemaType>$DATA_TYPE</schemaType> 
+				<outputPath>$PATHS/$OUTPUT_FILE</outputPath> 
+			</configuration> 
+		</plugin> 
+	</plugins> 
+  </build> 
+</project>  
  \n
  " > $PATHS/pom.xml
 
 
- mvn io.confluent:kafka-schema-registry-maven-plugin:derive-schema
+mvn io.confluent:kafka-schema-registry-maven-plugin:derive-schema
 
 if [ $DATA_TYPE = "avro" ]
  then

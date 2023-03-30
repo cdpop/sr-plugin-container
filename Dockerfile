@@ -15,7 +15,7 @@ ENV ADDITIONAL_PROPERTIES=""
 
 
 USER root
-RUN yum install -y jq maven
+RUN yum install -y jq maven vim
 WORKDIR /home/appuser
 
 RUN echo $MESSAGE > $PATHS/file.txt
@@ -55,7 +55,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd\">  \n\
 
 RUN  mvn io.confluent:kafka-schema-registry-maven-plugin:derive-schema
 COPY $SHELL_FILE .
+COPY sr_plugins/target/sr_plugins-0.0.1-SNAPSHOT.jar app.jar
 
 # Requires for me to escape JSON when passing in the variable otherwise shell script $1 will be broken
-
-CMD ["bash","-c","/home/appuser/$SHELL_FILE"]
+ENTRYPOINT ["java","-jar","/home/appuser/app.jar"]
+# CMD ["bash","-c","/home/appuser/$SHELL_FILE"]
