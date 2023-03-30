@@ -55,7 +55,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd\">  \n\
 
 RUN  mvn io.confluent:kafka-schema-registry-maven-plugin:derive-schema
 COPY $SHELL_FILE .
-COPY sr_plugins/target/sr_plugins-0.0.1-SNAPSHOT.jar app.jar
+COPY sr_plugins/target/sr_plugins-1.0.0-SNAPSHOT.jar app.jar
 
 # Requires for me to escape JSON when passing in the variable otherwise shell script $1 will be broken
 ENTRYPOINT ["java","-jar","/home/appuser/app.jar"]
