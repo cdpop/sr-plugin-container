@@ -195,10 +195,11 @@ public class DeriveSchemaController {
         return "Message was sent to topic.";
     }
 
-    @PostMapping(value = {"/derive-schema/broker/{broker}/{topic}/{sr_url}/{data_type}/{interval}/{extra_props}"})
+    @PostMapping(value = {"/derive-schema/broker/{broker}/{topic}/{protocol}/{sr_url}/{data_type}/{interval}/{extra_props}"})
     public String callDeriveSchemaBrokerTopicDataType(
             @Parameter(description = AnnotationConstants.brokerDescription) @PathVariable(required = false) String broker,
             @Parameter(description = AnnotationConstants.topicDescription) @PathVariable(required = false) String topic,
+            @Parameter(description = AnnotationConstants.protocolDescription) @PathVariable(required = false) String protocol,
             @Parameter(description = AnnotationConstants.srUrlDescription) @PathVariable(required = false) String sr_url,
             @Parameter(description = AnnotationConstants.dataTypeDescription) @PathVariable(required = false) String data_type,
             @Parameter(description = AnnotationConstants.intervalDescription) @PathVariable(required = false) String interval,
@@ -209,7 +210,9 @@ public class DeriveSchemaController {
         broker = startProcessHelper.pathVariableFormatter(broker,"broker:9092");
         data_type = startProcessHelper.pathVariableFormatter(data_type,"avro");
         topic = startProcessHelper.pathVariableFormatter(topic,"sample_data");
+        protocol = startProcessHelper.pathVariableFormatter(protocol,"http");
         sr_url = startProcessHelper.pathVariableFormatter(sr_url,"http://schema-registry:8081");
+        sr_url = sr_url.contains("https") || sr_url.contains("http") ? sr_url=sr_url : protocol + "://" + sr_url;
         extra_props = startProcessHelper.pathVariableFormatter(extra_props,"");
         String payload = "'" + jsonPayload.toString() + "'";
         String payloadResult = startProcessHelper.isPayLoadGood(payload);

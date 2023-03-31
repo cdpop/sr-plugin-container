@@ -29,14 +29,15 @@ Open browser and start using the REST API:
 
 
 The following API variables are available depending on which API path you choose:
-| Variable Name 	| Description                                                                                                    	| Valid values                	| Default values              	|
-|---------------	|----------------------------------------------------------------------------------------------------------------	|-----------------------------	|-----------------------------	|
-| data_type     	| Data type which will be used to generate the schema and send the message to the topic via the console producer 	| avro,json,protobuf          	| avro                        	|
-| interval      	| How many times to send this message to the topic                                                               	| 1 - Integer.MAX_VALUE         	| 1                           	|
-| broker        	| Broker hostname:port                                                                                           	| <hostname>:<port>           	| broker:9092                 	|
-| topic         	| Topic name                                                                                                     	| *                           	| sample_topic                	|
-| sr_url        	| Schema registry URL to talk to                                                                                 	| http(s)://<hostname>:<port> 	| http://schema-registry:8081 	|
-| extra_props   	| Any extra console producer properties                                                                          	| Any extra properties        	|                             	|
+| Variable Name 	| Description                                                                                                    	| Valid values         	| Default values       	|
+|---------------	|----------------------------------------------------------------------------------------------------------------	|----------------------	|----------------------	|
+| data_type     	| Data type which will be used to generate the schema and send the message to the topic via the console producer 	| avro,json,protobuf   	| avro                 	|
+| interval      	| How many times to send this message to the topic                                                               	| 1-Integer.MAX_VALUE  	| 1                    	|
+| broker        	| Broker hostname:port                                                                                           	| hostname:port    	| broker:9092          	|
+| topic         	| Topic name                                                                                                     	| *                    	| sample_topic         	|
+| protocol      	| http or https for sr_url                                                                                       	| http,https           	| http                 	|
+| sr_url        	| Schema registry URL to talk to                                                                                 	| hostname:port    	| schema-registry:8081 	|
+| extra_props   	| Any extra console producer properties                                                                          	| Any extra properties 	|                      	|
 
 
 ## Limitations

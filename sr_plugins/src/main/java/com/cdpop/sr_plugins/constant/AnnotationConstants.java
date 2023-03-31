@@ -7,7 +7,8 @@ public class AnnotationConstants {
     public static final String topicDescription= "Topic name requires to be larger than , default: sample_data";
     public static final String payLoadDescription= "Message to be sent to topic, example: '{\"name\":\"value2\"}' ";
     public static final String brokerDescription = "<hostname:port>, default: broker:9092";
-    public static final String srUrlDescription = "http://<hostname>:port, default: http://schema-registry:8081";
+    public static final String srUrlDescription = "<hostname>:port, default: schema-registry:8081";
+    public static final String protocolDescription = "http or https protocol, default: http";
 
 
 }
