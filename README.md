@@ -7,7 +7,7 @@ This project uses [Confluent Schema Registry Maven Plugin](https://docs.confluen
 Pull docker image:
 
 ```
-docker push cdpop001/sr_plugins:tagname
+docker pull cdpop001/sr_plugins:latest
 ```
 
 Run docker image:
