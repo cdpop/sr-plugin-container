@@ -34,9 +34,10 @@ public class DeriveSchemaController {
             // Payload was not provided sending response back
             return payloadResult;
         }
-
+        boolean compile = true;
         int processResult = startProcessHelper.processStart(
-                String.format("/home/appuser/derive_schema.sh %s %s ",
+                String.format("/home/appuser/derive_schema.sh %s %s %s ",
+                        compile,
                         data_type,
                         payload));
         return processResult > 0 ? "Message failed to send to topic, check logs" : "Success";
@@ -58,9 +59,15 @@ public class DeriveSchemaController {
         }
         int iterator = 0;
         int intervals = startProcessHelper.numOfCalls(interval);
+        boolean compile = true;
         while (iterator < intervals ){
+            if (iterator > 0){
+                compile=false;
+            }
+
             int processResult = startProcessHelper.processStart(
-                    String.format("/home/appuser/derive_schema.sh %s %s ",
+                    String.format("/home/appuser/derive_schema.sh %s %s %s ",
+                            compile,
                             data_type,
                             payload));
             if (processResult > 0){
@@ -87,9 +94,11 @@ public class DeriveSchemaController {
             // Payload was not provided sending response back
             return payloadResult;
         }
+        boolean compile = true;
 
         int processResult = startProcessHelper.processStart(
-                    String.format("/home/appuser/derive_schema.sh %s %s broker:9092 %s",
+                    String.format("/home/appuser/derive_schema.sh %s %s %s broker:9092 %s",
+                            compile,
                             data_type,
                             payload, topic));
         if (processResult > 0){
@@ -115,9 +124,14 @@ public class DeriveSchemaController {
         }
         int iterator = 0;
         int intervals = startProcessHelper.numOfCalls(interval);
+        boolean compile = true;
         while (iterator < intervals ){
+            if (iterator > 0){
+                compile=false;
+            }
             int processResult = startProcessHelper.processStart(
-                    String.format("/home/appuser/derive_schema.sh %s %s broker:9092 %s ",
+                    String.format("/home/appuser/derive_schema.sh %s %s %s broker:9092 %s ",
+                            compile,
                             data_type,
                             payload,topic));
             if (processResult > 0){
@@ -146,9 +160,11 @@ public class DeriveSchemaController {
             // Payload was not provided sending response back
             return payloadResult;
         }
+        boolean compile = true;
 
         int processResult = startProcessHelper.processStart(
-                String.format("/home/appuser/derive_schema.sh %s %s %s %s ",
+                String.format("/home/appuser/derive_schema.sh %s %s %s %s %s ",
+                        compile,
                         data_type,
                         payload,
                         broker,
@@ -178,11 +194,17 @@ public class DeriveSchemaController {
             // Payload was not provided sending response back
             return payloadResult;
         }
+        boolean compile = true;
         int iterator = 0;
         int intervals = startProcessHelper.numOfCalls(interval);
         while (iterator < intervals ) {
+            if (iterator > 0){
+                compile=false;
+            }
+
             int processResult = startProcessHelper.processStart(
-                    String.format("/home/appuser/derive_schema.sh %s %s %s %s ",
+                    String.format("/home/appuser/derive_schema.sh %s %s %s %s %s ",
+                            compile,
                             data_type,
                             payload,
                             broker,
@@ -220,11 +242,16 @@ public class DeriveSchemaController {
             // Payload was not provided sending response back
             return payloadResult;
         }
+        boolean compile = true;
         int iterator = 0;
         int intervals = startProcessHelper.numOfCalls(interval);
         while (iterator < intervals ) {
+            if (iterator > 0){
+                compile=false;
+            }
             int processResult = startProcessHelper.processStart(
-                    String.format("/home/appuser/derive_schema.sh %s %s %s %s %s %s",
+                    String.format("/home/appuser/derive_schema.sh %s %s %s %s %s %s %s",
+                            compile,
                             data_type,
                             payload,
                             broker,

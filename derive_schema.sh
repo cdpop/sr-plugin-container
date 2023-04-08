@@ -1,26 +1,27 @@
 #!/bin/bash
 set -e 
 
-DATA_TYPE="${1:-avro}"
+EXECUTE=$1
+DATA_TYPE="${2:-avro}"
 DATA_TYPE=$(echo "$DATA_TYPE" | tr '[:upper:]' '[:lower:]')
 
-MESSAGE="${2:-{\"me\":\"Foo\", \"Age\": 14}}"
+MESSAGE="${3:-{\"me\":\"Foo\", \"Age\": 14}}"
 # needed to export to fix escape issues
 export MESSAGE="$MESSAGE"
 
 echo $MESSAGE > $PATHS/file.txt
 
-BROKER="${3:-broker:9092}"
-TOPIC="${4:-sample_data}"
-SCHEMA_URL="${5:-http://schema-registry:8081}"
-ADDITIONAL_PROPERTIES="${6:-}"
+BROKER="${4:-broker:9092}"
+TOPIC="${5:-sample_data}"
+SCHEMA_URL="${6:-http://schema-registry:8081}"
+ADDITIONAL_PROPERTIES="${7:-}"
 # data_type has to be lowercase
 DATA_TYPE=$(echo "$DATA_TYPE" | tr '[:upper:]' '[:lower:]')
 
-SR_MAVEN_PLUGIN_VERSION="${7:-7.3.1}"
-PATHS="${8:-/home/appuser}"
-SHELL_FILE="${9:-derive_schema.sh}"
-OUTPUT_FILE="${10:-schema.json}"
+SR_MAVEN_PLUGIN_VERSION="${8:-7.3.1}"
+PATHS="${9:-/home/appuser}"
+SHELL_FILE="${10:-derive_schema.sh}"
+OUTPUT_FILE="${11:-schema.json}"
 
 echo $MESSAGE > $PATHS/file.txt
 
@@ -57,8 +58,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd\">
  \n
  " > $PATHS/pom.xml
 
-
-mvn io.confluent:kafka-schema-registry-maven-plugin:derive-schema
+if [ $EXECUTE = true ]
+ then
+  mvn io.confluent:kafka-schema-registry-maven-plugin:derive-schema
+fi
 
 if [ $DATA_TYPE = "avro" ]
  then
