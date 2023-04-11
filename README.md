@@ -42,4 +42,5 @@ The following API variables are available depending on which API path you choose
 
 ## Limitations
 - Nested data types is currently not supported due to console producer limitations and maven plugin limitations [link](https://docs.confluent.io/platform/current/schema-registry/develop/maven-plugin.html#primitive-data-types-mapping).
+- Logical Types are currently not supported
 - This repository is meant as a POC and is not supported by any vendor at the time. 
